@@ -99,4 +99,14 @@ def populate_assets(_):
 @app.callback(
     Output('theme-mode', 'data'),
     Input('toggle-theme', 'n_clicks'),
-    State('
+    State('theme-mode', 'data')
+)
+def toggle_theme(n, current):
+    if n is None:
+        return current
+    return 'light' if current == 'dark' else 'dark'
+
+server = app.server
+
+if __name__ == '__main__':
+    app.run(debug=False, host='0.0.0.0', port=8050)
