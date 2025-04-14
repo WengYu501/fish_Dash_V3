@@ -1,0 +1,25 @@
+name: Daily Liquidity Update
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # 每天 UTC+1（台灣時間早上 9 點）
+  workflow_dispatch:
+
+jobs:
+  run-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run data update
+        run: |
+          python update_assets.py
